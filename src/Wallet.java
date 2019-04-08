@@ -46,29 +46,4 @@ public class Wallet {
     public void close() throws Exception {
 	this.file.close();
     }
-
-    public void safeWithdraw(int valueToWithdraw) throws Exception {
-        FileLock lock = null;
-        try {
-            lock = this.file.getChannel().tryLock();
-            if (lock!=null){
-                int currentBalance = getBalance();
-                int newBalance = currentBalance - valueToWithdraw;
-                if (newBalance < 0){
-                    throw new IllegalStateException("Not enough credit.");
-                }
-                setBalance(newBalance);
-            } else {
-                throw new IllegalStateException("Wallet already in use.");
-            }
-
-        } catch (OverlappingFileLockException e){
-            // probably only possible using multi-threading
-            throw new IllegalStateException("Wallet already in use.");
-        } finally {
-            if (lock!=null){
-                lock.release();
-            }
-        }
-    }
 }

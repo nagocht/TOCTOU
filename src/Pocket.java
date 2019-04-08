@@ -30,29 +30,6 @@ public class Pocket {
     }
 
     /**
-     * Adds a product to the pocket.
-     *
-     * @param  product           product name to add to the pocket (e.g. "car")
-     */
-    public void safeAddProduct(String product) throws Exception {
-        FileLock lock = null;
-        try {
-            lock = this.file.getChannel().lock();
-
-            this.file.seek(this.file.length());
-            this.file.writeBytes(product+'\n');
-
-        } catch (OverlappingFileLockException e) {
-            // probably only possible using multi-threading
-            throw new IllegalStateException("Wallet already in use.");
-        } finally {
-            if (lock!=null){
-                lock.release();
-            }
-        }
-    }
-
-    /**
      * Closes the RandomAccessFile in this.file
      */
     public void close() throws Exception {
