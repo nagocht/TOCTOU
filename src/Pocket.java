@@ -20,16 +20,6 @@ public class Pocket {
     }
 
     /**
-     * Adds a product to the pocket. 
-     *
-     * @param  product           product name to add to the pocket (e.g. "car")
-     */
-    public void addProduct(String product) throws Exception {
-        this.file.seek(this.file.length());
-        this.file.writeBytes(product+'\n'); 
-    }
-
-    /**
      * Adds a product to the pocket.
      *
      * @param  product           product name to add to the pocket (e.g. "car")

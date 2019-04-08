@@ -17,8 +17,7 @@ public class ShoppingCart {
             printProductList();
 
             String article = chooseArticle();
-            int balance = checkCredits(article, wallet);
-//            int newBalance = withdrawMoney(article,balance, wallet);
+            checkCredits(article, wallet);
             int newBalance = safewithdrawMoney(article, wallet);
             addArticleToPocket(article, pocket);
             System.out.println(String.format("Your balance: %d credits", newBalance));
@@ -64,14 +63,6 @@ public class ShoppingCart {
         return balance;
     }
 
-    private static int withdrawMoney(String article, int balance, Wallet userWallet) throws Exception {
-        int price = Store.getProductPrice(article);
-
-        int newBalance = balance - price;
-        userWallet.setBalance(newBalance);
-        return newBalance;
-    }
-
     private static int safewithdrawMoney(String article, Wallet userWallet) throws Exception {
         int price = Store.getProductPrice(article);
         userWallet.safeWithdraw(price);
@@ -79,7 +70,6 @@ public class ShoppingCart {
     }
 
     private static void addArticleToPocket(String article, Pocket userPocket) throws Exception {
-//        userPocket.addProduct(article);
         userPocket.safeAddProduct(article);
     }
 }
